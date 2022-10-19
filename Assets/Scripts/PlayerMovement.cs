@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public float speed = 12f;
     public Animator playerAnimator;
+    public bool isIt = true;
+    public Camera playerCamera;
 
     //Gravity 
     Vector3 fallvelocity;
@@ -18,7 +20,11 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
-    
+    //Throwing
+    public Transform attackPoint;
+    public GameObject rock;
+    public float throwForce;
+    public float throwUpwardForce;
     
 
     // Start is called before the first frame update
@@ -41,7 +47,8 @@ public class PlayerMovement : MonoBehaviour
         //Animation code
         HandleAnimations();
 
-
+        //Handle throwing object
+        HandleThrowing();
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
@@ -52,6 +59,41 @@ public class PlayerMovement : MonoBehaviour
 
         fallvelocity.y += gravity * Time.deltaTime;
         controller.Move(fallvelocity * Time.deltaTime);
+
+    }
+
+    void HandleThrowing()
+    {
+        if(isIt && Input.GetMouseButtonDown(0) && playerAnimator.GetBool("idle")) //If isIt and press mouse down and idle then throw
+        {
+            playerAnimator.SetBool("throwing", true);
+
+            
+
+        }
+        else
+        {
+
+            //playerAnimator.SetBool("throwing", false);
+
+        }
+
+        if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("MeleeAttack_OneHanded") && playerAnimator.GetBool("throwing"))
+        {
+            playerAnimator.SetBool("throwing", false);
+
+            //Make object to throw
+            GameObject throwobj = Instantiate(rock, attackPoint.position, playerCamera.transform.rotation);
+
+            //Grab the rgbody of the projectile
+            Rigidbody throwobjRB = throwobj.GetComponent<Rigidbody>();
+
+            Vector3 forceAdding = playerCamera.transform.forward * throwForce + transform.up * throwUpwardForce;
+
+            throwobjRB.AddForce(forceAdding, ForceMode.Impulse); // impulse b/c only adding force once not contiuously
+
+            
+        }
 
     }
 
