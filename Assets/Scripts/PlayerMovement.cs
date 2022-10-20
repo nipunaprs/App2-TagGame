@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator playerAnimator;
     public bool isIt = true;
     public Camera playerCamera;
+    public GameObject enemy;
+    public GameObject gameManager;
 
     //Gravity 
     Vector3 fallvelocity;
@@ -30,12 +32,14 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.None;
     }
 
     // Update is called once per frame
     void Update()
     {
+        gameManager.GetComponent<GameManager>().UpdateStatus(isIt);
+
         //Gravity code
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -71,12 +75,7 @@ public class PlayerMovement : MonoBehaviour
             
 
         }
-        else
-        {
-
-            //playerAnimator.SetBool("throwing", false);
-
-        }
+       
 
         if (playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("MeleeAttack_OneHanded") && playerAnimator.GetBool("throwing"))
         {
@@ -147,6 +146,21 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetBool("runLeft", false);
             playerAnimator.SetBool("runStraight", false);
 
+        }
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Rock" && !isIt)
+        {
+            isIt = true;
+            enemy.GetComponent<EnemyManager>().isIt = false;
+            Debug.Log("before: " + gameManager.GetComponent<GameManager>().itCount);
+            gameManager.GetComponent<GameManager>().itCount += 1;
+            Debug.Log("Rock collided -- You are now it -- Enemy is no longer it");
+            Debug.Log("after: " + gameManager.GetComponent<GameManager>().itCount);
+            Destroy(collision.gameObject); //destroy the rock
         }
     }
 }
