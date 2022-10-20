@@ -45,31 +45,30 @@ public class Leaderbaord : MonoBehaviour
         }
         
 
-        /*
-        for (int i = 0; i < 10; i++)
-        {
-            Transform entryTransform = Instantiate(entryTemplate, entryContainer);
-            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
-            entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * i);
-            entryTransform.gameObject.SetActive(true);
-
-            entryTransform.Find("ITScoreTxt").GetComponent<Text>().text = Random.Range(0,10).ToString();
-            entryTransform.Find("PlayerNameTxt").GetComponent<Text>().text = "AAA";
-
-        }*/
+       
 
 
     }
 
     void LoadData()
     {
-        //AssetDatabase.ImportAsset("Assets/Database/scores.txt");
-        file = (TextAsset)Resources.Load("scores", typeof(TextAsset));
+        //AssetDatabase.ImportAsset("Assets/Database/scores.txt"); --> This properly refreshes the txt file but can't build game with this b/c its editor method
+        //file = (TextAsset)Resources.Load("scores", typeof(TextAsset)); //Resources.Load doesn't refresh the txt file even when calling it again
         //Resources.Load<TextAsset>("scores");
+        //Solution was to use StreamReader instead of the unity text asset file thing
+        //Notes for later project lol ^
 
-        var content = file.text;
-        var allData = content.Split("\n");
-        List<string> listOfData = new List<string>(allData);
+        var sr = new StreamReader(Application.dataPath + "/Resources/scores.txt");
+        var fileData = sr.ReadToEnd();
+        sr.Close();
+
+        var lines = fileData.Split("\n"[0]);
+        List<string> listOfData = new List<string>(lines);
+
+        //Unity code to read files -- doesn't update every new entry so implemented streamreader instead above
+        //var content = file.text;
+        //var allData = content.Split("\n");
+        //List<string> listOfData = new List<string>(allData);
         
 
         //Note since using sorteddictionary -- scores that are the same will be replaced in the leaderboard with new ones.
