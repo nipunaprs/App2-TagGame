@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject rock;
     public float throwForce;
     public float throwUpwardForce;
+
     
 
     // Start is called before the first frame update
