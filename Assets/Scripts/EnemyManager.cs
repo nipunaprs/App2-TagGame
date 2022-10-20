@@ -117,7 +117,7 @@ public class EnemyManager : MonoBehaviour
         if(collision.gameObject.tag == "Rock" && isIt == false)
         {
             isIt = true;
-            player.GetComponent<PlayerMovement>().isIt = false;
+            player.GetComponentInParent<PlayerMovement>().isIt = false;
             Debug.Log("Enemy hit -- You are no longer it -- Run away");
             Destroy(collision.gameObject); //destroy the rock
         }
