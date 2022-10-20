@@ -3170,7 +3170,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 4540228999537114419}
   isIt: 0
   enemyProximityDistance: 10
-  enemyProximityRunAwayDistance: 20
+  enemyProximityRunAwayDistance: 300
   attackPoint: {fileID: 1581054509}
   rock: {fileID: 5202732821079448320, guid: 51bb13edeec913845873b1e9b2a17377, type: 3}
   throwForce: 20
@@ -5706,7 +5706,7 @@ GameObject:
   - component: {fileID: 2081110276}
   m_Layer: 0
   m_Name: Trees
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647

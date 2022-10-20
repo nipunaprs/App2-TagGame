@@ -14,8 +14,8 @@ public class EnemyManager : MonoBehaviour
 
     //Running away variables
     public float enemyProximityDistance = 10.0f;
-    public float enemyProximityRunAwayDistance = 20.0f;
-
+    public float enemyProximityRunAwayDistance = 300.0f;
+    
 
     //Throwing
     public Transform attackPoint;
@@ -24,6 +24,8 @@ public class EnemyManager : MonoBehaviour
     public float throwUpwardForce;
     public float throwCooldown=4f;
     public bool readyToThrow;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -56,11 +58,57 @@ public class EnemyManager : MonoBehaviour
             float sqrtDistance = (transform.position - player.transform.position).sqrMagnitude;
             float enemyDistanceRunSqrt = enemyProximityRunAwayDistance * enemyProximityRunAwayDistance;
 
+            //bool isDirSafe = false;
+            //float vRotation = 0;
 
+            
             if (sqrtDistance < enemyDistanceRunSqrt)
             {
+                //Debug.Log(sqrtDistance);
                 Vector3 dirToPlayer = transform.position - player.transform.position; //Find direction to player
                 Vector3 newPos = transform.position + dirToPlayer; //Set new position to itself + that
+
+                /*
+                 *** Tried to improve AI to raycast and check for walls and avoid corners -- Affects framerate really bad due to constant raycasts
+                 *and affects nav mesh agent code too much. Decided to keep it simple.
+                while (!isDirSafe)
+                {
+                    Vector3 dirToPlayer = transform.position - player.transform.position; //Find direction to player
+                    Vector3 newPos = transform.position + dirToPlayer; //Set new position to itself + that
+
+                    //Rotate direction of enemy 
+                    newPos = Quaternion.Euler(0, vRotation, 0) * newPos;
+
+                    //Raycast to see if wall within 5f distance --> the rocks are labled as walls
+                    bool isHit = Physics.Raycast(transform.position, newPos, out RaycastHit hit, 5f);
+
+                    //If the hit is null, then No wall so direction is safe
+                    if (hit.transform == null)
+                    {
+                        //If the Raycast to the flee direction doesn't hit a wall then the Enemy is good to go to this direction
+                        agent.SetDestination(newPos);
+                        isDirSafe = true;
+                    }
+
+                    //If hit something and tag is a wall, then change the direction of fleeing is it hits a wall by 20 degrees
+                    if (isHit && hit.transform.CompareTag("Walls"))
+                    {
+                        vRotation += 20;
+                        isDirSafe = false;
+                        
+                    }
+                    
+                    else
+                    {
+                        //If the Raycast to the flee direction doesn't hit a wall then the Enemy is good to go to this direction
+                        agent.SetDestination(newPos);
+                        isDirSafe = true;
+                        
+                    }
+
+                }*/
+
+
 
 
 
