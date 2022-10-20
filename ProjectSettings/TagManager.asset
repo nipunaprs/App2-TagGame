@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Rock
   - Enviroment
+  - Walls
   layers:
   - Default
   - TransparentFX

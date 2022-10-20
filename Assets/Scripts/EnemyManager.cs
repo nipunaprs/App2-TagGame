@@ -14,7 +14,7 @@ public class EnemyManager : MonoBehaviour
 
     //Running away variables
     public float enemyProximityDistance = 10.0f;
-    public float enemyProximityRunAwayDistance = 30.0f;
+    public float enemyProximityRunAwayDistance = 20.0f;
 
 
     //Throwing
@@ -51,12 +51,19 @@ public class EnemyManager : MonoBehaviour
         }
         else
         {
-            float distance = Vector3.Distance(transform.position, player.transform.position); //find distance btwn enemy and player
+            //float distance = Vector3.Distance(transform.position, player.transform.position); //find distance btwn enemy and player
 
-            if(distance < enemyProximityRunAwayDistance)
+            float sqrtDistance = (transform.position - player.transform.position).sqrMagnitude;
+            float enemyDistanceRunSqrt = enemyProximityRunAwayDistance * enemyProximityRunAwayDistance;
+
+
+            if (sqrtDistance < enemyDistanceRunSqrt)
             {
                 Vector3 dirToPlayer = transform.position - player.transform.position; //Find direction to player
                 Vector3 newPos = transform.position + dirToPlayer; //Set new position to itself + that
+
+
+
 
                 agent.SetDestination(newPos);
             }

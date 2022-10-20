@@ -62,7 +62,7 @@ public class Leaderbaord : MonoBehaviour
         var fileData = sr.ReadToEnd();
         sr.Close();
 
-        var lines = fileData.Split("\n"[0]);
+        var lines = fileData.Split("\n");
         List<string> listOfData = new List<string>(lines);
 
         //Unity code to read files -- doesn't update every new entry so implemented streamreader instead above
