@@ -109,8 +109,8 @@ public class GameManager : MonoBehaviour
 
 
         //save to text file
-        File.AppendAllText("Assets/Database/scores.txt","\n");
-        File.AppendAllText("Assets/Database/scores.txt",name + "-" + itCount);
+        File.AppendAllText("Assets/Resources/scores.txt","\n");
+        File.AppendAllText("Assets/Resources/scores.txt", name + "-" + itCount);
         
     }
 }
