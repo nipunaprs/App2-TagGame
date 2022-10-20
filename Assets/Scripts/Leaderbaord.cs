@@ -63,7 +63,7 @@ public class Leaderbaord : MonoBehaviour
 
     void LoadData()
     {
-        AssetDatabase.ImportAsset("Assets/Database/scores.txt");
+        //AssetDatabase.ImportAsset("Assets/Database/scores.txt");
 
 
         var content = file.text;
